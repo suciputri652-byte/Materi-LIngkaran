@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Materi Matematika Interaktif - Lingkaran</title>
+
+    <style>
+      * { box-sizing: border-box; }
+
+      body {
+        font-family: "Poppins", Times New Roman;
+        margin: 0;
+        background: linear-gradient(135deg, #7989c9, #414bb9);
+        color: #12054b;
+        min-height: 100vh;
+      }
+
+      header { text-align: center; padding: 30px 20px; }
+      header h1 { font-size: 28px; margin-bottom: 10px; }
+      header p { color: #12054b; }
+
+      .container {
+        max-width: 450px;
+        margin: 60px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      }
+
+      .card {
+        background: #558b7c;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      }
+
+      .card h2, .card p { color: #1d0b6c; }
+
+      .link-btn {
+        display: inline-block;
+        background: #233933;
+        color: rgb(255, 255, 255);
+        padding: 10px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .link-btn:hover { background: #9efae1; color: black; }
+
+      #quizPage { display: none; }
+
+      #quizPage input {
+        width: 80%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #1a1a71;
+        margin-top: 10px;
+      }
+
+      #quizPage button {
+        padding: 10px 18px;
+        border-radius: 6px;
+        border: none;
+        background: #558b7c;
+        color: rgb(23, 4, 75);
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      #quizPage button:hover { background: #323d3e; }
+
+      #feedback {
+        font-size: 18px;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Bab Lingkaran</h1>
+      <p>Belajar Lingkaran dengan PPT interaktif dan kuis langsung.</p>
+    </header>
+
+    <!-- ================= HALAMAN UTAMA ================= -->
+    <main>
+      <div id="homePage" class="container">
+        <div class="card">
+          <h2>1. Bab Lingkaran</h2>
+          <p>Kumpulan materi matematika berbasis Canva yang menarik dan mudah dipahami untuk siswa.</p>
+          <a
+            href="https://www.canva.com/design/DAGzJRX0-uo/qGrYA0hsHAUGOy1Z_p2BuA/edit?utm_content=DAGzJRX0-uo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+            target="_blank"
+            class="link-btn"
+            >Lihat di Canva</a>
+        </div>
+
+        <div class="card">
+          <h2>2. Kuis Lingkaran</h2>
+          <p>Kerjakan soal berikut ini!</p>
+          <a class="link-btn" onclick="startQuiz()">Mulai Kuis</a>
+        </div>
+      </div>
+
+      <!-- ================= HALAMAN QUIZ ================= -->
+      <div id="quizPage" class="container">
+        <h2>Kuis Bab Lingkaran</h2>
+
+        <p id="question"></p>
+        <input type="text" id="answerInput" placeholder="Tuliskan jawaban kamu...">
+
+        <br><br>
+        <button onclick="checkAnswer()">Jawab</button>
+        <button onclick="nextQuestion()">Next</button>
+
+        <p id="feedback"></p>
+        <p id="score" style="display:none;"></p>
+
+        <button id="homeBtn" style="display:none;" onclick="backHome()">Kembali ke Beranda</button>
+      </div>
+    </main>
+
+    <script>
+      // ========== SOAL-SOAL QUIZ ==========
+      let questions = [
+        { q: "1. Apa nama garis dari pusat ke tepi lingkaran?", a: "jari-jari" },
+        { q: "2. Rumus keliling lingkaran?", a: "2πr" },
+        { q: "3. Rumus luas lingkaran?", a: "πr2" },
+        { q: "4. Jika diameter 14 cm, berapa jari-jari?", a: "7" },
+        { q: "5. Jari-jari = 10 cm → diameter?", a: "20" }
+      ];
+
+      let index = 0;
+      let score = 0;
+
+      function startQuiz() {
+        document.getElementById("homePage").style.display = "none";
+        document.getElementById("quizPage").style.display = "block";
+
+        document.getElementById("question").innerText = questions[index].q;
+      }
+
+      function checkAnswer() {
+        let user = document.getElementById("answerInput").value.toLowerCase().trim();
+        let correct = questions[index].a.toLowerCase();
+
+        if (user === correct) {
+          document.getElementById("feedback").innerHTML = "✔ Benar!";
+          document.getElementById("feedback").style.color = "green";
+          score++;
+        } else {
+          document.getElementById("feedback").innerHTML = "✘ Salah!";
+          document.getElementById("feedback").style.color = "red";
+        }
+      }
+
+      function nextQuestion() {
+        index++;
+
+        if (index >= questions.length) {
+          endQuiz();
+          return;
+        }
+
+        document.getElementById("question").innerText = questions[index].q;
+        document.getElementById("answerInput").value = "";
+        document.getElementById("feedback").innerHTML = "";
+      }
+
+      function endQuiz() {
+        document.getElementById("question").innerText = "Kuis Selesai!";
+        document.getElementById("answerInput").style.display = "none";
+        document.getElementById("feedback").style.display = "none";
+
+        document.getElementById("score").style.display = "block";
+        document.getElementById("score").innerHTML = "Nilai Kamu: " + score + "/" + questions.length;
+
+        document.getElementById("homeBtn").style.display = "block";
+      }
+
+      function backHome() {
+        location.reload();
+      }
+    </script>
+
+  </body>
+</html>
